@@ -1,0 +1,43 @@
+import sklearn as sk
+from statistics import LinearRegression
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('student_info.csv')
+
+df.plot(x= 'student_marks', y='study_hours',style = 'o')
+plt.title('Study_hours vs Student_marks')
+plt.xlabel('Student_Marks')
+plt.ylabel('Study_Hours')
+plt.show()
+print(df.head(10))
+
+X = df.iloc[ : , : - 1].values
+y = df.iloc[: , 1].values
+
+from sklearn import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = False)
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+print("Training Complete !!!!")
+line = (regressor.coef_*X) + (regressor.intercept)
+
+plt.scatter(X,y)
+plt.plot(X, line)
+plt.show()
+
+print(X_test)
+y_pred = regressor.predict(X_test)
+
+df = pf.DataFrame({'Actual': y_test, 'predicted' : y_pred})
+print(df.head(10))
+
+score_predict = np.array([8.25])
+score.predict = score_predict.reshape(-1,1)
+predict = regressor.predict(score_predict)
+print("No of hours = {}".format(8.25))
+print("Predicted Score = {}".format(predict[10]))
+
+from sklearn import metrics
+print('Mean absolute error : ', metrics.mean_absolute_error(y_test, y_pred))
